@@ -5,14 +5,22 @@ require 'active_record'
 require 'database_cleaner'
 
 ActiveRecord::Base.establish_connection adapter: "sqlite3", database: "test.db"
-DatabaseCleaner.strategy = :truncation
 
 RSpec.configure do |config|
   config.before(:all) do
+    DatabaseCleaner.strategy = :truncation
+    DatabaseCleaner.clean_with(:truncation)
+
     GoBuild.build('main.go')
     $child_process = ChildProcess.build('./main')
     $child_process.start
     sleep(1) # warm up
+  end
+
+  config.around(:each) do |example|
+    DatabaseCleaner.cleaning do
+      example.run
+    end
   end
 
   config.before(:each) do
