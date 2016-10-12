@@ -17,6 +17,7 @@ GEM
     byebug (9.0.5)
     childprocess (0.3.9)
       ffi (~> 1.0, >= 1.0.11)
+    database_cleaner (1.5.3)
     diff-lcs (1.2.5)
     ffi (1.9.10)
     i18n (0.7.0)
@@ -44,6 +45,7 @@ DEPENDENCIES
   activerecord
   byebug
   childprocess
+  database_cleaner
   rspec
   sqlite3
 

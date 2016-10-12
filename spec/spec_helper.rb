@@ -2,8 +2,10 @@ require 'childprocess'
 require 'support/go_build'
 require 'byebug'
 require 'active_record'
+require 'database_cleaner'
 
 ActiveRecord::Base.establish_connection adapter: "sqlite3", database: "test.db"
+DatabaseCleaner.strategy = :truncation
 
 RSpec.configure do |config|
   config.before(:all) do
@@ -19,6 +21,6 @@ RSpec.configure do |config|
 
   config.after(:all) do
     $child_process.stop if $child_process
-    File.delete("test.db")
+    DatabaseCleaner.clean
   end
 end
