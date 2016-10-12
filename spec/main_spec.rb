@@ -1,5 +1,6 @@
 require 'open-uri'
 require 'support/models/product'
+require 'httparty'
 
 describe 'canary test' do
   it 'it true' do
@@ -10,7 +11,7 @@ describe 'canary test' do
   it 'request success' do
     expect(Product.count).to eq 0
 
-    response = open('http://localhost:8080/').read
+    response = HTTParty.get('http://localhost:8080/').body
 
     expect(Product.count).to eq 1
 
